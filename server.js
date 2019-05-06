@@ -6,7 +6,7 @@ const cors = require( 'cors' );
 const history = require( 'connect-history-api-fallback' );
 const Sequelize = require( 'sequelize' );
 const sequelize = require( './server/db' );
-const models = require( './server/models' );
+const models = require( './server/read-models' );
 
 const debug = require("debug")("node-angular");
 const http = require("http");
@@ -37,47 +37,39 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/api/lab_list", (req, res, next) => {
-//   models.Laboratories.findOne()
-//   .then(labs => {
-//     console.log(labs);
-//   });
-// });
-
-
 app.use( '/', routes );
-app.use( function( req, res, next ) {
-  if ( req.url=='/404' ){
-    res.status( 404 );
-  }
-  next();
-});
+// app.use( function( req, res, next ) {
+//   if ( req.url=='/404' ){
+//     res.status( 404 );
+//   }
+//   next();
+// });
 app.use( history());
 
-// Use Webpack Dev/Hot Middleware if we are not in the production environment
-if ( process.env.npm_lifecycle_event === 'start' ) {
-  const webpack = require( 'webpack' );
-  const webpackConfig = require( '../webpack/dev.config' );
-  const compiler = webpack( webpackConfig );
+// // Use Webpack Dev/Hot Middleware if we are not in the production environment
+// if ( process.env.npm_lifecycle_event === 'start' ) {
+//   const webpack = require( 'webpack' );
+//   const webpackConfig = require( '../webpack/dev.config' );
+//   const compiler = webpack( webpackConfig );
 
-  // Attach the dev middleware to the compiler & the server
-  app.use(
-    require( 'webpack-dev-middleware' )( compiler, {
-      noInfo: true,
-      publicPath: webpackConfig.output.publicPath
-    })
-  );
-  // Enable hot reloading
-  app.use( require( 'webpack-hot-middleware' )( compiler ));
-} else {
-  // Make everything in the build directory available for use when in production
-  app.use( express.static( path.join( __dirname, '../build' )));
+//   // Attach the dev middleware to the compiler & the server
+//   app.use(
+//     require( 'webpack-dev-middleware' )( compiler, {
+//       noInfo: true,
+//       publicPath: webpackConfig.output.publicPath
+//     })
+//   );
+//   // Enable hot reloading
+//   app.use( require( 'webpack-hot-middleware' )( compiler ));
+// } else {
+//   // Make everything in the build directory available for use when in production
+//   app.use( express.static( path.join( __dirname, '../build' )));
 
-  // Required for compatibility with AngularJS HTML5 mode
-  app.get( '*', ( req, res ) => {
-    res.sendFile( path.join( __dirname, '../build/index.html' ));
-  });
-}
+//   // Required for compatibility with AngularJS HTML5 mode
+//   app.get( '*', ( req, res ) => {
+//     res.sendFile( path.join( __dirname, '../build/index.html' ));
+//   });
+// }
 
 
 const normalizePort = val => {
@@ -128,13 +120,13 @@ app.set("port", port);
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
+server.listen(port);
 
-sequelize.sync()
-.then(result => {
-  server.listen(port);
-  // console.log(result);
-})
-.catch(err => {
-  console.log(err);
-}) ;
+// sequelize.READsequelize.sync()
+// .then(result => {
+//   // console.log(result);
+// })
+// .catch(err => {
+//   console.log(err);
+// }) ;
 

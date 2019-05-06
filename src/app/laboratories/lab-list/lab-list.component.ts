@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Post } from '../post.model';
+import { Laboratory } from '../laboratory.model';
 import { LaboratoryService } from '../laboratory.service';
 
 @Component({
@@ -11,20 +11,34 @@ import { LaboratoryService } from '../laboratory.service';
 })
 export class LabListComponent implements OnInit, OnDestroy {
   private laboratories;
+  private tickets;
   private labsSub: Subscription;
+  private ticketsSub: Subscription;
 
   constructor(public laboratoryService: LaboratoryService) {}
 
   ngOnInit() {
     this.laboratoryService.getlabs();
-    this.labsSub = this.laboratoryService.getPostUpdateListener()
+    this.laboratoryService.getTickets();
+    this.ticketsSub = this.laboratoryService.getPostUpdateListener()
       .subscribe((laboratories) => {
-        console.log(laboratories);
         this.laboratories = laboratories;
       });
+    this.labsSub = this.laboratoryService.getTicketsUpdateListener()
+      .subscribe((tickets) => {
+        this.tickets = tickets;
+    });
   }
 
   ngOnDestroy() {
     this.labsSub.unsubscribe();
+    this.ticketsSub.unsubscribe();
+  }
+
+  deleteLab(id: number) {
+    this.laboratoryService.deleteLab(id);
+  }
+  editLab( id: number, ticket_atr: string, ticket_old_value: string ) {
+    this.laboratoryService.addPost( id, ticket_atr, ticket_old_value );
   }
 }

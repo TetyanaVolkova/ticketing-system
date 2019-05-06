@@ -14,11 +14,11 @@ export class LabSearchComponent {
 
   constructor(public laboratoryService: LaboratoryService) {}
 
-  onAddPost(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
-    this.laboratoryService.addPost(form.value.labID, form.value.title);
-    form.resetForm();
-  }
+  // onAddPost(form: NgForm) {
+  //   if (form.invalid) {
+  //     return;
+  //   }
+  //   this.laboratoryService.addPost(form.value.labID, form.value.title);
+  //   form.resetForm();
+  // }
 }

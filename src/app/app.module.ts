@@ -11,10 +11,13 @@ import {
   MatExpansionModule
 } from '@angular/material';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { AppComponent } from './app.component';
 import { LabSearchComponent } from './laboratories/lab-search/lab-search.component';
 import { HeaderComponent } from './header/header.component';
 import { LabListComponent } from './laboratories/lab-list/lab-list.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { LabListComponent } from './laboratories/lab-list/lab-list.component';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -32,7 +36,8 @@ import { LabListComponent } from './laboratories/lab-list/lab-list.component';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

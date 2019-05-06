@@ -1,12 +1,14 @@
 const express = require( 'express' );
-const models = require( '../models' );
+const readModels = require( '../read-models' );
+const Models = require('../models');
 const router = express.Router();
 
 // Routes:
 
 // Getting Laboratories
-router.get( '/api/lab_list', ( req, res ) => {
-  models.Laboratories.findAll({
+router.get( '/api/lab_list', ( req, res, next ) => {
+
+  readModels.Laboratories.findAll({
   })
     .then( Laboratories => {
       res.json( Laboratories );
@@ -16,7 +18,20 @@ router.get( '/api/lab_list', ( req, res ) => {
     });
 });
 
-router.post("/api/lab_list", (req, res, next) => {
+// Getting Tickets
+router.get( '/api/tickets_list', ( req, res, next ) => {
+
+  Models.Tickets.findAll({
+  })
+    .then( Tickets => {
+      res.json( Tickets );
+    })
+    .catch( err => {
+      console.error( err );
+    });
+});
+
+router.post("/api/tickets_list", (req, res, next) => {
   // const laboratories = new models.Laboratories({
   //   lab_id: req.body.lab_id,
   //   lab_name: req.body.lab_name
@@ -28,18 +43,18 @@ router.post("/api/lab_list", (req, res, next) => {
   console.log('---------------------------');
   console.log('---------------------------');
   console.log('---------------------------');
-  const labs = req.body[0];
-  console.log(labs);
-  models.Laboratories.create( labs )
+  console.log(req.body);
+  const tickets = req.body;
+  Models.Tickets.create( tickets )
   .then(result => {
-    console.log('---------------------------');
-    console.log('---------------------------');
-    console.log('---------------------------');
-    console.log('---------------------------');
-    console.log('---------------------------');
-    console.log('---------------------------');
-    console.log('---------------------------');
-    console.log(result.dataValues)
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log(result.dataValues)
     res.json( result.dataValues );
     console.log('Created Product');
   })
@@ -48,31 +63,22 @@ router.post("/api/lab_list", (req, res, next) => {
   });
 });
 
-// router.post( '/api/lab_list', ( req, res ) => {
-//   console.log(req);
-//   const title = req.body.title;
-//   models.Laboratories.create({
-//     lab_name: title
-//   })
-//   .then(result => {
-//     // console.log(result);
-//     console.log('Created Product');
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
-// });
+router.delete("/api/lab_list:id", (req, res, next) => {
+  // console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log(req.params.id);
+  readModels.Laboratories.findOne( {where: {'lab_id': req.params.id}} )
+  .then(lab => {
+    lab.destroy();
+  })
+  .catch(err => console.log(err));
 
-// Find a crsCoordinator and return the associated upd_time
-router.get( '/api/last_reviewed', ( req, res ) => {
-  models.Crs_coordinator.findOne()
-    .then( crsCoordinator => {
-      let lastReviewed = crsCoordinator.upd_time;
-      res.json( lastReviewed );
-    })
-    .catch( err => {
-      console.error( err );
-    });
-});
+  res.status(200).json({ message: "Post deleted" });
+})
 
 module.exports = router;

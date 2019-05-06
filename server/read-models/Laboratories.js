@@ -1,7 +1,7 @@
 const Sequelize = require( 'sequelize' );
 const db = require( '../db' );
 
-const Laboratories = db.define(
+const Laboratories = db.READsequelize.define(
   'laboratories',
   {
     lab_id: { type: Sequelize.INTEGER, primaryKey: true },
@@ -16,8 +16,7 @@ const Laboratories = db.define(
     lab_test_performed: Sequelize.STRING,
     Certified_By: Sequelize.STRING,
     Latitude: Sequelize.STRING,
-    Longtitude: Sequelize.STRING,
-    tickets: []
+    Longtitude: Sequelize.STRING
   },
   { underscored: true }
 );
