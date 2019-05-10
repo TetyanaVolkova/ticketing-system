@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Laboratory } from '../laboratory.model';
 import { LaboratoryService } from '../laboratory.service';
+import { SearchService } from '../../search-component/search.service';
 
 @Component({
   selector: 'app-lab-list',
@@ -14,25 +15,37 @@ export class LabListComponent implements OnInit, OnDestroy {
   private tickets;
   private labsSub: Subscription;
   private ticketsSub: Subscription;
+  private searchSub;
+  private searchString = '';
 
-  constructor(public laboratoryService: LaboratoryService) {}
+  constructor(public laboratoryService: LaboratoryService,
+              private cd: ChangeDetectorRef,
+              private searchService: SearchService) {}
 
   ngOnInit() {
+    this.searchSub = this.searchService.getSearchUpdateListener()
+      .subscribe((searchString) => {
+        this.searchString = searchString.toString();
+        this.cd.markForCheck();
+      });
     this.laboratoryService.getlabs();
     this.laboratoryService.getTickets();
     this.ticketsSub = this.laboratoryService.getPostUpdateListener()
       .subscribe((laboratories) => {
         this.laboratories = laboratories;
+        this.cd.markForCheck();
       });
     this.labsSub = this.laboratoryService.getTicketsUpdateListener()
       .subscribe((tickets) => {
         this.tickets = tickets;
+        this.cd.markForCheck();
     });
   }
 
   ngOnDestroy() {
     this.labsSub.unsubscribe();
     this.ticketsSub.unsubscribe();
+    this.searchSub.unsubscribe();
   }
 
   deleteLab(id: number) {

@@ -20,7 +20,6 @@ router.get( '/api/lab_list', ( req, res, next ) => {
 
 // Getting Tickets
 router.get( '/api/tickets_list', ( req, res, next ) => {
-
   Models.Tickets.findAll({
   })
     .then( Tickets => {
@@ -31,19 +30,19 @@ router.get( '/api/tickets_list', ( req, res, next ) => {
     });
 });
 
+// Getting Regulatory
+router.get( '/api/regulatory_list', ( req, res, next ) => {
+  readModels.Regulatory.findAll({
+  })
+    .then( regulatory => {
+      res.json( regulatory );
+    })
+    .catch( err => {
+      console.error( err );
+    });
+});
+
 router.post("/api/tickets_list", (req, res, next) => {
-  // const laboratories = new models.Laboratories({
-  //   lab_id: req.body.lab_id,
-  //   lab_name: req.body.lab_name
-  // })
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log('---------------------------');
-  console.log(req.body);
   const tickets = req.body;
   Models.Tickets.create( tickets )
   .then(result => {

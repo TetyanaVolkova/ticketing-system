@@ -1,0 +1,32 @@
+<mat-card id="search_field">
+  <form #postForm="ngForm">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="name"
+        [(ngModel)]="name"
+        name="name"
+        required
+        placeholder="Search by {{ parentName }} Name"
+        (keyup)="onKey($event, name)"
+      >
+      <mat-error *ngIf="name.invalid">Search by {{ parentName }} name</mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="labID"
+        ngModel
+        required
+        placeholder="Lab ID"
+        #labID="ngModel">
+      <mat-error *ngIf="labID.invalid">Please enter a lab id.</mat-error>
+    </mat-form-field> -->
+    <!-- <button
+      mat-raised-button
+      color="accent"
+      type="submit">Search</button> -->
+  </form>
+</mat-card>

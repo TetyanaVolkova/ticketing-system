@@ -29,7 +29,7 @@ mat-action-row button {
   height: 100% !important;
 }
 
-.lab_list {
+.reg_list {
   margin-top: 18px;
   padding: 0 12px;
   max-height: min-content;
@@ -51,7 +51,7 @@ mat-action-row button {
 }
 
 .mat-expansion-panel {
-  margin: 16px 0;
+  margin: 12px 0;
   -moz-box-shadow:    5px 3px 10px 4px #ccc;
   -webkit-box-shadow: 5px 3px 10px 4px #ccc;
   box-shadow:         5px 3px 10px 4px #ccc;

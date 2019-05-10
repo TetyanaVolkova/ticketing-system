@@ -19,9 +19,7 @@ export class TicketService {
         'http://localhost:3000/api/lab_list'
       )
       .subscribe(postData => {
-        console.log(postData);
         this.labs = postData;
-        console.log(this.labs);
         this.labsUpdated.next([...this.labs]);
       });
   }
@@ -44,13 +42,10 @@ export class TicketService {
                     ticket_old_value: 'string',
                     ticket_new_value: title
                   });
-                    console.log(tickets);
     this.http
       .post('http://localhost:3000/api/tickets_list', tickets)
       .subscribe(responseData => {
-        console.log(responseData);
         this.labs.push(tickets[0]);
-        console.log(this.labs);
         this.labsUpdated.next([...this.labs]);
       });
   }
@@ -60,7 +55,6 @@ export class TicketService {
     this.http
       .post('http://localhost:3000/api/tickets_list', tiket)
       .subscribe(responseData => {
-        console.log(responseData);
         this.labs = this.labs.filter(function(el) {
           return el.lab_id !== id;
         });

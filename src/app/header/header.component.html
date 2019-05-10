@@ -1,1 +1,20 @@
-<mat-toolbar color="primary">Laboratories</mat-toolbar>
+<mat-toolbar color="primary">
+  <span>
+    <a routerLink="/">
+      LOGO will be here
+    </a>
+  </span>
+  <span class="spacer"></span>
+  <ul fxLayout="row">
+    <li>
+      <a mat-button routerLink="/laboratories" routerLinkActive="router-link-active">Laboratories</a>
+    </li>
+    <li>
+      <a mat-button routerLink="/regulatory" routerLinkActive="router-link-active">Regulatory</a>
+    </li>
+    <li>
+      <a mat-button routerLink="/history" routerLinkActive="router-link-active">History</a>
+    </li>
+  </ul>
+</mat-toolbar>
+

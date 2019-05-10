@@ -22,9 +22,7 @@ export class LaboratoryService {
         'http://localhost:3000/api/lab_list'
       )
       .subscribe(postData => {
-        console.log(postData);
         this.labs = postData;
-        console.log(this.labs);
         this.labsUpdated.next([...this.labs]);
       });
   }
@@ -35,7 +33,6 @@ export class LaboratoryService {
         'http://localhost:3000/api/tickets_list'
       )
       .subscribe(postData => {
-        console.log(postData);
         this.tickets = postData;
         this.ticketsUpdated.next([...this.tickets]);
       });

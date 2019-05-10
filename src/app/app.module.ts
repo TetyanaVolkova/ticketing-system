@@ -14,17 +14,23 @@ import {
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
-import { LabSearchComponent } from './laboratories/lab-search/lab-search.component';
+import { SearchComponent } from './search-component/search.component';
 import { HeaderComponent } from './header/header.component';
+import { HistoryListComponent } from './history/history-list/history-list.component';
 import { LabListComponent } from './laboratories/lab-list/lab-list.component';
+import { RegulatoryListComponent } from './regulatory/regulatory-list/regulatory-list.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { SearchPipe } from './pipes/search-pipe.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LabSearchComponent,
+    SearchComponent,
     HeaderComponent,
-    LabListComponent
+    LabListComponent,
+    RegulatoryListComponent,
+    HistoryListComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
