@@ -1,0 +1,6 @@
+<div *ngFor="let ticket of historyService.ticketArray">
+    <h2 *ngIf="labId === ticket.lab_id && ticketatr === ticket.ticket_atr" id="lab_name">
+      {{ (ticket.ticket_id + 1) + ". " + ticket.ticket_date + " " + ticket.ticket_status }}
+    </h2>
+</div>
+

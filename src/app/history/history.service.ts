@@ -2,26 +2,34 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
+import { AppService } from '../app.service';
+
 
 @Injectable({ providedIn: 'root' })
 
 export class HistoryService {
+  private ticketsUpdated = new Subject();
   private history;
-  private HistoryUpdated = new Subject();
+  public ticketArray;
+  private historySub;
 
-  constructor( private http: HttpClient) {}
-  getHistory() {
-    this.http
-      .get<{ message: string; history: {} }>(
-        'http://localhost:3000/api/tickets_list'
-      )
-      .subscribe(postData => {
-        this.history = postData;
-        this.HistoryUpdated.next([...this.history]);
+  constructor( private http: HttpClient,
+               private appService: AppService ) {
+    this.appService.getTickets();
+    this.historySub = this.appService.getTicketsUpdateListener()
+      .subscribe((history) => {
+        this.history = history;
+        this.ticketsUpdated.next([...this.history]);
       });
+
   }
-  getHistoryUpdateListener() {
-    return this.HistoryUpdated.asObservable();
+  onOpen( lab_id ) {
+    const that = this;
+    this.history.forEach(element => {
+      if ( element.lab_id === lab_id ) {
+        that.ticketArray.push(element);
+      }
+    });
   }
 
   // getTickets() {

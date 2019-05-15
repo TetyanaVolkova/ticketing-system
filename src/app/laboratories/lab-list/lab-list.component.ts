@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { Laboratory } from '../laboratory.model';
 import { LaboratoryService } from '../laboratory.service';
 import { SearchService } from '../../search-component/search.service';
+import { AppService } from '../../app.service';
+import { HistoryService } from '../../history/history.service';
 
 @Component({
   selector: 'app-lab-list',
@@ -11,41 +13,49 @@ import { SearchService } from '../../search-component/search.service';
   styleUrls: ['./lab-list.component.css']
 })
 export class LabListComponent implements OnInit, OnDestroy {
-  private laboratories;
+  objectKeys = Object.keys;
+  private crss;
   private tickets;
-  private labsSub: Subscription;
-  private ticketsSub: Subscription;
+  private crssSub: Subscription;
   private searchSub;
   private searchString = '';
 
   constructor(public laboratoryService: LaboratoryService,
+              private appService: AppService,
+              private historyService: HistoryService,
               private cd: ChangeDetectorRef,
               private searchService: SearchService) {}
 
   ngOnInit() {
+    this.appService.getCrss();
+    // this.appService.getTickets();
     this.searchSub = this.searchService.getSearchUpdateListener()
-      .subscribe((searchString) => {
-        this.searchString = searchString.toString();
-        this.cd.markForCheck();
-      });
-    this.laboratoryService.getlabs();
-    this.laboratoryService.getTickets();
-    this.ticketsSub = this.laboratoryService.getPostUpdateListener()
-      .subscribe((laboratories) => {
-        this.laboratories = laboratories;
-        this.cd.markForCheck();
-      });
-    this.labsSub = this.laboratoryService.getTicketsUpdateListener()
-      .subscribe((tickets) => {
-        this.tickets = tickets;
-        this.cd.markForCheck();
+    .subscribe((searchString) => {
+      this.searchString = searchString.toString();
+      this.cd.markForCheck();
     });
+    this.crssSub = this.appService.getCrsUpdateListener()
+      .subscribe((crss) => {
+        this.crss = crss;
+        console.log(this.crss);
+        this.cd.markForCheck();
+      });
+    // this.ticketsSub = this.appService.getTicketsUpdateListener()
+    //   .subscribe((tickets) => {
+    //     this.tickets = tickets;
+    //     this.cd.markForCheck();
+    // });
   }
 
   ngOnDestroy() {
-    this.labsSub.unsubscribe();
-    this.ticketsSub.unsubscribe();
+    this.crssSub.unsubscribe();
+    // this.ticketsSub.unsubscribe();
     this.searchSub.unsubscribe();
+  }
+
+  onOpen ( lab_id ) {
+    this.historyService.ticketArray = [];
+    this.historyService.onOpen( lab_id );
   }
 
   deleteLab(id: number) {

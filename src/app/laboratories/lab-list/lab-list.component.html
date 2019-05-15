@@ -1,67 +1,95 @@
 
-<app-search [parentName]="'Laboratory'"></app-search>
-<div class="lab_list">
-  <mat-accordion *ngIf="laboratories" multi="false">
-    <mat-expansion-panel *ngFor="let lab of laboratories | searchPipe:searchString:'lab_name'">
-      <mat-expansion-panel-header class="lab_panel_header">
-        <h2 id="lab_name">{{ lab.lab_name }}</h2>
-      </mat-expansion-panel-header >
-      <div id="lab_info">
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Location:</h3>
-          <h4 fxFlex="60%">{{ lab.location }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'location', lab.location)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">POC Name:</h3>
-          <h4 fxFlex="60%">{{ lab.PoC_name }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_name', ab.PoC_name)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">POC Address:</h3>
-          <h4 fxFlex="60%">{{ lab.PoC_address }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_address', lab.PoC_address)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Certification:</h3>
-          <h4 fxFlex="60%">{{ lab.certification }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'certification', lab.certification)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">LDMS#:</h3>
-          <h4 fxFlex="60%">{{ lab.LDMS }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'LDMS', lab.LDMS)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Quality Assurance:</h3>
-          <h4 fxFlex="60%">{{ lab.qa_services }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'qa_services', lab.qa_services)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Tests Performed:</h3>
-          <h4 fxFlex="60%">{{ lab.lab_test_performed }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'lab_test_performed', lab.lab_test_performed)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Certified By:</h3>
-          <h4 fxFlex="60%">{{ lab.Certified_By }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'Certified_By', lab.Certified_By)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Latitude:</h3>
-          <h4 fxFlex="60%">{{ lab.Latitude }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'Latitude', lab.Latitude)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Longtitude:</h3>
-          <h4 fxFlex="60%">{{ lab.Longtitude }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'Longtitude', lab.Longtitude)" mat-raised-button color="primary">EDIT</button>
-        </div>
-      </div>
-      <mat-action-row>
-        <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
+<app-search [parentName]="'CRS'"></app-search>
+<div *ngIf="crss" class="lab_list">
+  <div *ngFor="let crs of objectKeys(crss | searchPipe:searchString:'crs_name')">
+    <h2>{{ crss[crs].crs_id }}  -  {{ crss[crs].crs_name }}</h2>
 
+    <mat-accordion multi="false">
+      <mat-expansion-panel class="add_new_lab">
+        <mat-expansion-panel-header class="lab_panel_header">
+            <h4>Add New Laboratory Associated with {{ crss[crs].crs_name }}</h4>
+        </mat-expansion-panel-header>
+        <div>Add Lab</div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion multi="false">
+      <mat-expansion-panel class="crss_labs" *ngFor="let lab of crss[crs].laboratories; let i = index">
+        <mat-expansion-panel-header (click)="onOpen( lab.lab_id )" class="lab_panel_header">
+          <h5 class="lab_number">Laboratory {{ i + 1 }}: </h5>
+          <h3 id="lab_name"><span> &nbsp;&nbsp; </span> {{ lab.lab_name }}</h3>
+        </mat-expansion-panel-header >
+        <div id="lab_info">
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Location:</h3>
+            <h4 fxFlex="60%">{{ lab.location }}</h4>
+            <button fxFlex="10%"
+              (click)="editLab(lab.lab_id, 'location', lab.location)"
+              mat-raised-button
+              color="primary">
+              EDIT
+            </button>
+          </div>
+          <app-ticket-element [ticketatr]="'location'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">POC Name:</h3>
+            <h4 fxFlex="60%">{{ lab.PoC_name }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_name', lab.PoC_name)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'PoC_name'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">POC Address:</h3>
+            <h4 fxFlex="60%">{{ lab.PoC_address }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_address', lab.PoC_address)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'PoC_address'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Certification:</h3>
+            <h4 fxFlex="60%">{{ lab.certification }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'certification', (lab.certification || ''))" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'certification'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">LDMS#:</h3>
+            <h4 fxFlex="60%">{{ lab.LDMS }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'LDMS', lab.LDMS)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'LDMS'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Quality Assurance:</h3>
+            <h4 fxFlex="60%">{{ lab.qa_services }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'qa_services', lab.qa_services)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'qa_services'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Tests Performed:</h3>
+            <h4 fxFlex="60%">{{ lab.lab_test_performed }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'lab_test_performed', lab.lab_test_performed)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'lab_test_performed'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Certified By:</h3>
+            <h4 fxFlex="60%">{{ lab.Certified_By }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'Certified_By', lab.Certified_By)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'Certified_By'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Latitude:</h3>
+            <h4 fxFlex="60%">{{ lab.Latitude }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'Latitude', lab.Latitude)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'Latitude'" [labId]="lab.lab_id"></app-ticket-element>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <h3 fxFlex="18%">Longtitude:</h3>
+            <h4 fxFlex="60%">{{ lab.Longtitude }}</h4>
+            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'Longtitude', lab.Longtitude)" mat-raised-button color="primary">EDIT</button>
+          </div>
+          <app-ticket-element [ticketatr]="'Longtitude'" [labId]="lab.lab_id"></app-ticket-element>
+        </div>
+        <mat-action-row>
+          <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

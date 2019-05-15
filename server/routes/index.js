@@ -5,25 +5,53 @@ const router = express.Router();
 
 // Routes:
 
-// Getting Laboratories
-router.get( '/api/lab_list', ( req, res, next ) => {
 
-  readModels.Laboratories.findAll({
+router.get( '/api/crs_list', ( req, res ) => {
+  readModels.Crs.findAll({
+    include: [
+      {
+        model: readModels.Regulatory
+      },
+      {
+        model: readModels.Laboratories,
+        include: [
+          {
+            model: readModels.Crs,
+            as: 'related_lab',
+            attributes: ['crs_id', 'crs_name', 'crs_type']
+          }
+        ]
+      }
+    ],
+    order: ['crs_id']
   })
-    .then( Laboratories => {
-      res.json( Laboratories );
+    .then( crsList => {
+      res.json( crsList );
     })
     .catch( err => {
       console.error( err );
     });
 });
 
+// Getting Laboratories
+// router.get( '/api/lab_list', ( req, res, next ) => {
+
+//   readModels.Laboratories.findAll({
+//   })
+//     .then( Laboratories => {
+//       res.json( Laboratories );
+//     })
+//     .catch( err => {
+//       console.error( err );
+//     });
+// });
+
 // Getting Tickets
 router.get( '/api/tickets_list', ( req, res, next ) => {
   Models.Tickets.findAll({
   })
-    .then( Tickets => {
-      res.json( Tickets );
+    .then( tickets => {
+      res.json( tickets );
     })
     .catch( err => {
       console.error( err );
@@ -31,16 +59,16 @@ router.get( '/api/tickets_list', ( req, res, next ) => {
 });
 
 // Getting Regulatory
-router.get( '/api/regulatory_list', ( req, res, next ) => {
-  readModels.Regulatory.findAll({
-  })
-    .then( regulatory => {
-      res.json( regulatory );
-    })
-    .catch( err => {
-      console.error( err );
-    });
-});
+// router.get( '/api/regulatory_list', ( req, res, next ) => {
+//   readModels.Regulatory.findAll({
+//   })
+//     .then( regulatory => {
+//       res.json( regulatory );
+//     })
+//     .catch( err => {
+//       console.error( err );
+//     });
+// });
 
 router.post("/api/tickets_list", (req, res, next) => {
   const tickets = req.body;

@@ -7,6 +7,18 @@
   padding-right: 24px;
 }
 
+.lab_number {
+  width: 18%;
+}
+
+.add_new_lab {
+  background: rgb(253, 242, 242);
+}
+
+.crss_labs {
+  background: rgb(237, 250, 238);
+}
+
 #lab_info div {
   background: rgb(218, 228, 248);
   -moz-box-shadow:    5px 3px 10px 4px #ccc;
@@ -40,10 +52,6 @@ mat-action-row button {
   box-shadow:         5px 3px 10px 4px #ccc;
 }
 
-.mat-expansion-panel-header.mat-expanded .mat-expansion-panel {
-  border: solid 3px black;
-}
-
 .mat-expansion-panel-header.mat-expanded #lab_name {
   font-weight: 600;
   margin: 40px auto;
@@ -51,8 +59,6 @@ mat-action-row button {
 }
 
 .mat-expansion-panel {
-  margin: 16px 0;
-  -moz-box-shadow:    5px 3px 10px 4px #ccc;
-  -webkit-box-shadow: 5px 3px 10px 4px #ccc;
-  box-shadow:         5px 3px 10px 4px #ccc;
+  width: 93%;
+  margin: 8px auto;
 }

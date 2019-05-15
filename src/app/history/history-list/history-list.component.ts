@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HistoryService } from '../history.service';
+import { AppService } from '../../app.service';
 import { SearchService } from '../../search-component/search.service';
 
 @Component({
@@ -14,19 +14,18 @@ export class HistoryListComponent implements OnInit, OnDestroy {
   private searchSub;
   private searchString = '';
 
-  constructor ( public historyService: HistoryService,
+  constructor ( public appService: AppService,
                 private cd: ChangeDetectorRef,
                 private searchService: SearchService ) {}
 
   ngOnInit() {
     this.searchSub = this.searchService.getSearchUpdateListener()
       .subscribe((searchString) => {
-        console.log(searchString);
         this.searchString = searchString.toString();
         this.cd.markForCheck();
       });
-    this.historyService.getHistory();
-    this.historySub = this.historyService.getHistoryUpdateListener()
+    this.appService.getTickets();
+    this.historySub = this.appService.getTicketsUpdateListener()
       .subscribe((history) => {
         this.history = history;
         this.cd.markForCheck();

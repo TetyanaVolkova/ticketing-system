@@ -1,52 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { Tickets } from '../tickets/tickets.model';
-
+import { AppService } from '../app.service';
 
 @Injectable({ providedIn: 'root' })
 
 export class LaboratoryService {
   private labs;
   private lab_id;
-  private labsUpdated = new Subject();
   private ticketsUpdated = new Subject();
   private date = new Date();
   private tickets;
 
-  constructor(private http: HttpClient) {}
-
-  getlabs() {
-    this.http
-      .get<{ message: string; labs: {} }>(
-        'http://localhost:3000/api/lab_list'
-      )
-      .subscribe(postData => {
-        this.labs = postData;
-        this.labsUpdated.next([...this.labs]);
-      });
-  }
-
-  getTickets() {
-    this.http
-      .get<{ message: string; tickets: {} }>(
-        'http://localhost:3000/api/tickets_list'
-      )
-      .subscribe(postData => {
-        this.tickets = postData;
-        this.ticketsUpdated.next([...this.tickets]);
-      });
-  }
-
-  getPostUpdateListener() {
-    return this.labsUpdated.asObservable();
-  }
-
-  getTicketsUpdateListener() {
-    return this.ticketsUpdated.asObservable();
-  }
+  constructor(private http: HttpClient,
+              private appService: AppService) {}
 
   addPost( labID: number, ticket_atr: string, ticket_old_value: string ) {
+    this.tickets = this.appService.tickets;
     const lab_id = Number(labID);
     const ticket_id = this.tickets.length + 1;
     const ticket = {  ticket_id: ticket_id,
