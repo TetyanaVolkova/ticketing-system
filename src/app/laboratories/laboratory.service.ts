@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { AppService } from '../app.service';
+import { formatDate } from '@angular/common/src/i18n/format_date';
+import { moment } from 'moment/src/moment';
 
 @Injectable({ providedIn: 'root' })
 
@@ -18,9 +20,10 @@ export class LaboratoryService {
   addPost( labID: number, ticket_atr: string, ticket_old_value: string ) {
     this.tickets = this.appService.tickets;
     const lab_id = Number(labID);
+    const formatedDate = moment( this.date ).format( 'MMMM DD, YYYY' );
     const ticket_id = this.tickets.length + 1;
     const ticket = {  ticket_id: ticket_id,
-                      ticket_date: this.date,
+                      ticket_date: formatedDate,
                       ticket_status: 'post',
                       ticket_email: 'email@email.com',
                       ticket_fullname: 'Some Name',

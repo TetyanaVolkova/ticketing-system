@@ -4,7 +4,7 @@
   <mat-accordion *ngIf="history" multi="false">
     <mat-expansion-panel *ngFor="let ticket of history | searchPipe:searchString:'ticket_status'">
       <mat-expansion-panel-header class="lab_panel_header">
-        <h2 id="lab_name">{{ (ticket.ticket_id + 1) + ". " + ticket.ticket_date + " " + ticket.ticket_status }}</h2>
+        <h2 id="lab_name">{{ (ticket.ticket_id + 1) }}<i>. Ticket was created </i>on {{ ticket.ticket_date }}, <i>status: </i> {{ ticket.ticket_status }}</h2>
       </mat-expansion-panel-header >
       <div id="lab_info">
         <div fxLayout="row" fxLayoutAlign="center">

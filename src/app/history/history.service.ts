@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+declare var require: any;
+const moment = require('moment');
 
 import { AppService } from '../app.service';
 
@@ -27,6 +29,7 @@ export class HistoryService {
     const that = this;
     this.history.forEach(element => {
       if ( element.lab_id === lab_id ) {
+        element.ticket_date =  moment( element.ticket_date ).format( 'MMMM DD, YYYY' );
         that.ticketArray.push(element);
       }
     });

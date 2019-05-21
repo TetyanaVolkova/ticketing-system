@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../app.service';
 import { SearchService } from '../../search-component/search.service';
+// const moment = require('moment');
 
 @Component({
   selector: 'app-history-list',
@@ -28,6 +29,9 @@ export class HistoryListComponent implements OnInit, OnDestroy {
     this.historySub = this.appService.getTicketsUpdateListener()
       .subscribe((history) => {
         this.history = history;
+        this.history.forEach(element => {
+          // element.ticket_date = moment( element.ticket_date ).format( 'MMMM DD, YYYY' );
+        });
         this.cd.markForCheck();
       });
   }

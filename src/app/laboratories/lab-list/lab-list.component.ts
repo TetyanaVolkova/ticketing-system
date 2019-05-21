@@ -15,10 +15,10 @@ import { HistoryService } from '../../history/history.service';
 export class LabListComponent implements OnInit, OnDestroy {
   objectKeys = Object.keys;
   private crss;
-  private tickets;
   private crssSub: Subscription;
   private searchSub;
   private searchString = '';
+  private toggleEdit = true;
 
   constructor(public laboratoryService: LaboratoryService,
               private appService: AppService,
@@ -27,33 +27,26 @@ export class LabListComponent implements OnInit, OnDestroy {
               private searchService: SearchService) {}
 
   ngOnInit() {
-    this.appService.getCrss();
-    // this.appService.getTickets();
     this.searchSub = this.searchService.getSearchUpdateListener()
     .subscribe((searchString) => {
       this.searchString = searchString.toString();
       this.cd.markForCheck();
     });
+    this.appService.getCrss();
     this.crssSub = this.appService.getCrsUpdateListener()
       .subscribe((crss) => {
         this.crss = crss;
-        console.log(this.crss);
         this.cd.markForCheck();
       });
-    // this.ticketsSub = this.appService.getTicketsUpdateListener()
-    //   .subscribe((tickets) => {
-    //     this.tickets = tickets;
-    //     this.cd.markForCheck();
-    // });
   }
 
   ngOnDestroy() {
     this.crssSub.unsubscribe();
-    // this.ticketsSub.unsubscribe();
     this.searchSub.unsubscribe();
   }
 
   onOpen ( lab_id ) {
+    this.toggleEdit = true;
     this.historyService.ticketArray = [];
     this.historyService.onOpen( lab_id );
   }
@@ -62,6 +55,7 @@ export class LabListComponent implements OnInit, OnDestroy {
     this.laboratoryService.deleteLab(id);
   }
   editLab( id: number, ticket_atr: string, ticket_old_value: string ) {
+    this.toggleEdit = !this.toggleEdit;
     this.laboratoryService.addPost( id, ticket_atr, ticket_old_value );
   }
 }

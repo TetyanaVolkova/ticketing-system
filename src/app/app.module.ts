@@ -22,6 +22,7 @@ import { LabListComponent } from './laboratories/lab-list/lab-list.component';
 import { RegulatoryListComponent } from './regulatory/regulatory-list/regulatory-list.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SearchPipe } from './pipes/search-pipe.pipe';
+import { LabInfoComponent } from './laboratories/lab-info/lab-info.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SearchPipe } from './pipes/search-pipe.pipe';
     RegulatoryListComponent,
     HistoryListComponent,
     TicketElementComponent,
-    SearchPipe
+    SearchPipe,
+    LabInfoComponent
   ],
   imports: [
     BrowserModule,

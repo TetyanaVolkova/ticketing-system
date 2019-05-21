@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular
 import { Subscription } from 'rxjs';
 import { AppService } from '../../app.service';
 import { HistoryService } from '../history.service';
-const moment = require('moment');
 
 @Component({
   selector: 'app-ticket-element',

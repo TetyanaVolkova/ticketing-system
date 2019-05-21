@@ -11,10 +11,12 @@ export class SearchPipe implements PipeTransform {
     }
     const resultArray = [];
     for ( const item of value ) {
-      if ( item[propName] != null ) {
-        const lowerCaseLabName = item[propName].toLowerCase();
+      if ( item[propName] !== null ) {
+        const lowerCaseCrsName = item[propName].toLowerCase();
         const lowerCaseInputName = filterString.toLowerCase();
-        if ( lowerCaseLabName.includes(lowerCaseInputName) ) {
+        console.log(lowerCaseCrsName, lowerCaseInputName);
+        console.log(lowerCaseCrsName.includes(lowerCaseInputName));
+        if ( lowerCaseCrsName.includes(lowerCaseInputName) ) {
           resultArray.push(item);
         }
       }

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RegulatoryService } from '../regulatory.service';
+import { AppService } from '../../app.service';
 import { SearchService } from '../../search-component/search.service';
 
 @Component({
@@ -9,32 +10,52 @@ import { SearchService } from '../../search-component/search.service';
   styleUrls: ['./regulatory-list.component.css']
 })
 export class RegulatoryListComponent implements OnInit, OnDestroy {
-  private regulatory;
-  private regulatorySub: Subscription;
-  private searchSub;
+  objectKeys = Object.keys;
+  private crss;
+  private crssSub: Subscription;
+  private searchSub: Subscription;
   private searchString = '';
 
-  constructor ( public regulatoryService: RegulatoryService,
+  constructor ( private regulatoryService: RegulatoryService,
+                private appService: AppService,
                 private cd: ChangeDetectorRef,
                 private searchService: SearchService ) {}
 
   ngOnInit() {
     this.searchSub = this.searchService.getSearchUpdateListener()
       .subscribe((searchString) => {
-        console.log(searchString);
         this.searchString = searchString.toString();
         this.cd.markForCheck();
       });
-    this.regulatoryService.getRegulatory();
-    this.regulatorySub = this.regulatoryService.getRegulatoryUpdateListener()
-      .subscribe((regulatory) => {
-        this.regulatory = regulatory;
-        this.cd.markForCheck();
-      });
+      this.appService.getCrss();
+      this.crssSub = this.appService.getCrsUpdateListener()
+        .subscribe((crss) => {
+          this.crss = crss;
+          let reg_id = 400;
+          this.crss.forEach(element => {
+            if ( element.regulatory === null ) {
+              element.regulatory = {
+                id: reg_id,
+                ctu_name: '',
+                associated_regulatory_crs: '',
+                crs_id: '',
+                regulatory_authority_name: '',
+                local_irb_ec_name: '',
+                other_irb_ec_name: '',
+                established_ibc: '',
+                ibc_name: '',
+                language: '',
+                cti_needed: ''
+              };
+            }
+            reg_id ++;
+           });
+          this.cd.markForCheck();
+        });
   }
 
   ngOnDestroy() {
-    this.regulatorySub.unsubscribe();
+    this.crssSub.unsubscribe();
     this.searchSub.unsubscribe();
   }
 

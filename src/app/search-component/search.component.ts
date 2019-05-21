@@ -16,7 +16,10 @@ export class SearchComponent {
                private cd: ChangeDetectorRef ) {
   }
   onKey (event, name) {
-    this.searchService.getInputValue( event.key, name );
+    const that = this;
+    setTimeout(function () {
+      that.searchService.getInputValue( event.key, name );
+   }, 2000);
   }
 
   // onAddPost(form: NgForm) {
