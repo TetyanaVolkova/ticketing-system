@@ -11,7 +11,7 @@ export class SearchService {
   getSearchUpdateListener() {
     return this.SearchUpdated.asObservable();
   }
-  getInputValue( event, name ) {
-    this.SearchUpdated.next(name);
+  getInputValue( val ) {
+    this.SearchUpdated.next(val);
   }
 }

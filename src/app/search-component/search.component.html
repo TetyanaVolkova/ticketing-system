@@ -9,7 +9,7 @@
         name="name"
         required
         placeholder="Search by {{ parentName }} Name"
-        (keyup)="onKey($event, name)"
+        (keyup)="onKey($event.target.value, name)"
       >
       <mat-error *ngIf="name.invalid">Search by {{ parentName }} name</mat-error>
     </mat-form-field>

@@ -19,3 +19,25 @@
   mat-form-field {
     width: 100%;
   }
+
+  .editing_lab {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    z-index: 99;
+    background: rgba(0, 0, 0, .9);
+  }
+
+  .editing_lab div {
+    box-shadow: none !important;
+    margin: .5vh auto !important;
+    width: 94%;
+    height: 45vh;
+    overflow: auto;
+  }
+
+  textarea {
+    height: 25vh;
+  }

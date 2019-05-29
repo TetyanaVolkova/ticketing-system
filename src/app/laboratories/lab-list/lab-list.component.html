@@ -1,7 +1,7 @@
 
 <app-search [parentName]="'CRS'"></app-search>
 <div *ngIf="crss" class="lab_list">
-  <div *ngFor="let crs of objectKeys((crss | searchPipe:searchString:'crs_name'))">
+  <div *ngFor="let crs of objectKeys(crss | searchPipe:searchString:'crs_name')">
     <h3>{{ crss[crs].crs_id }}  -  {{ crss[crs].crs_name }}</h3>
 
     <mat-accordion multi="false">
@@ -14,70 +14,78 @@
     </mat-accordion>
 
     <mat-accordion multi="false">
-      <mat-expansion-panel class="crss_labs" *ngFor="let lab of crss[crs].laboratories; let i = index">
-        <mat-expansion-panel-header (click)="onOpen( lab.lab_id )" class="lab_panel_header">
-          <h5 class="lab_number">Laboratory {{ i + 1 }}: </h5>
-          <h3 id="lab_name"><span> &nbsp;&nbsp; </span> {{ lab.lab_name }}</h3>
-        </mat-expansion-panel-header >
-        <div id="lab_info">
-          <app-lab-info [lable]="'Location'" [labAtrr]="lab.location"></app-lab-info>
+      <div class="crss_labs">
+        <mat-expansion-panel *ngFor="let lab of crss[crs].laboratories; let i = index">
+          <mat-expansion-panel-header (click)="onOpen( $event, lab )" class="lab_panel_header">
+            <h5 class="lab_number">Laboratory {{ i + 1 }}: </h5>
+            <h3 id="lab_name"><span> &nbsp;&nbsp; </span> {{ lab.lab_name }}</h3>
+          </mat-expansion-panel-header>
+          <div class="lab_info">
+            <app-lab-info [lab]="lab" [lable]="'Location'" [labAtrr]="'location'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'location'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'POC Name'" [labAtrr]="'PoC_name'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'PoC_name'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info
+              [lab]="lab"
+              [lable]="'POC Address'"
+              [labAtrr]="'PoC_address'">
+            </app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'PoC_address'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'Certification'" [labAtrr]="'certification'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'certification'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'LDMS#'" [labAtrr]="'LDMS'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'LDMS'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'Quality Assurance'" [labAtrr]="'qa_services'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'qa_services'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'Tests Performed'" [labAtrr]="'lab_test_performed'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'lab_test_performed'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'Certified By'" [labAtrr]="'Certified_By'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'Certified_By'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'Latitude'" [labAtrr]="'Latitude'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'Latitude'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+            <app-lab-info [lab]="lab" [lable]="'Longtitude'" [labAtrr]="'Longtitude'"></app-lab-info>
+            <app-ticket-element
+              [ticketatr]="'Longtitude'"
+              [labId]="lab.lab_id">
+            </app-ticket-element>
+          </div>
           <app-ticket-element
-            [ticketatr]="'location'"
-            [labId]="lab.lab_id">
+            [labId]="lab.lab_id"
+            [ticketatr]=""
+            [status]="'delete'">
           </app-ticket-element>
-          <app-lab-info [lable]="'POC Name'" [labAtrr]="lab.PoC_name"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'PoC_name'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info
-            [lable]="'POC Address'"
-            [labAtrr]="lab.PoC_address">
-          </app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'PoC_address'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info [lable]="'Certification'" [labAtrr]="lab.certification"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'certification'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info [lable]="'LDMS#'" [labAtrr]="lab.LDMS"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'LDMS'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info [lable]="'Quality Assurance'" [labAtrr]="lab.qa_services"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'qa_services'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info (click)="editLab(lab.lab_id, 'lab_test_performed', lab.lab_test_performed)" [lable]="'Tests Performed'" [labAtrr]="lab.lab_test_performed"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'lab_test_performed'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info [lable]="'Certified By'" [labAtrr]="lab.Certified_By"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'Certified_By'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info [lable]="'Latitude'" [labAtrr]="lab.Latitude"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'Latitude'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-          <app-lab-info [lable]="'Longtitude'" [labAtrr]="lab.Longtitude"></app-lab-info>
-          <app-ticket-element
-            [ticketatr]="'Longtitude'"
-            [labId]="lab.lab_id">
-          </app-ticket-element>
-        </div>
-        <mat-action-row>
-          <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
-        </mat-action-row>
-      </mat-expansion-panel>
+          <mat-action-row>
+            <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </div>
     </mat-accordion>
   </div>
 </div>

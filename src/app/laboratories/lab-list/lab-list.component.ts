@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Laboratory } from '../laboratory.model';
@@ -18,7 +18,7 @@ export class LabListComponent implements OnInit, OnDestroy {
   private crssSub: Subscription;
   private searchSub;
   private searchString = '';
-  private toggleEdit = true;
+  private toggleTarget = true;
 
   constructor(public laboratoryService: LaboratoryService,
               private appService: AppService,
@@ -30,7 +30,7 @@ export class LabListComponent implements OnInit, OnDestroy {
     this.searchSub = this.searchService.getSearchUpdateListener()
     .subscribe((searchString) => {
       this.searchString = searchString.toString();
-      this.cd.markForCheck();
+      // this.cd.markForCheck();
     });
     this.appService.getCrss();
     this.crssSub = this.appService.getCrsUpdateListener()
@@ -45,17 +45,18 @@ export class LabListComponent implements OnInit, OnDestroy {
     this.searchSub.unsubscribe();
   }
 
-  onOpen ( lab_id ) {
-    this.toggleEdit = true;
+  onOpen ( event, lab ) {
+    if ( this.toggleTarget === true ) {
+      event.currentTarget.parentElement.parentElement.classList.add('lab_is_open');
+    } else {
+      event.currentTarget.parentElement.parentElement.classList.remove('lab_is_open');
+    }
+    this.toggleTarget = !this.toggleTarget;
     this.historyService.ticketArray = [];
-    this.historyService.onOpen( lab_id );
+    this.historyService.onOpen( lab.lab_id );
   }
 
   deleteLab(id: number) {
     this.laboratoryService.deleteLab(id);
-  }
-  editLab( id: number, ticket_atr: string, ticket_old_value: string ) {
-    this.toggleEdit = !this.toggleEdit;
-    this.laboratoryService.addPost( id, ticket_atr, ticket_old_value );
   }
 }

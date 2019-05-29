@@ -2,5 +2,8 @@
     <h3 *ngIf="labId === ticket.lab_id && ticketatr === ticket.ticket_atr" id="lab_name">
       Edited on {{ ticket.ticket_date }}
     </h3>
+    <h3 class="deleted_labs" *ngIf="status == 'delete' && labId === ticket.lab_id" id="lab_name">
+      Request for deliting was created on {{ ticket.ticket_date }}
+    </h3>
 </div>
 

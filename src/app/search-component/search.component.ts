@@ -15,11 +15,8 @@ export class SearchComponent {
   constructor( private searchService: SearchService,
                private cd: ChangeDetectorRef ) {
   }
-  onKey (event, name) {
-    const that = this;
-    setTimeout(function () {
-      that.searchService.getInputValue( event.key, name );
-   }, 2000);
+  onKey (val) {
+    this.searchService.getInputValue( val );
   }
 
   // onAddPost(form: NgForm) {

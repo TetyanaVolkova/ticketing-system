@@ -12,6 +12,7 @@ export class TicketElementComponent implements OnInit, OnDestroy {
   private history = [];
   @Input() labId: string;
   @Input() ticketatr: string;
+  @Input() status: string;
 
   constructor ( private appService: AppService,
                 private historyService: HistoryService,

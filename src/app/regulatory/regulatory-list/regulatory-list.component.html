@@ -5,20 +5,18 @@
     <h3>{{ crss[crs].crs_id }}  -  {{ crss[crs].crs_name }}</h3>
 
     <mat-accordion multi="false">
-      <mat-expansion-panel class="add_new_lab">
+      <mat-expansion-panel class="add_new_reg">
         <mat-expansion-panel-header class="lab_panel_header">
             <h4>Add New Regulatory Associated with {{ crss[crs].crs_name }}</h4>
         </mat-expansion-panel-header>
         <div>Add Lab</div>
       </mat-expansion-panel>
     </mat-accordion>
-
-
-
+    
     <mat-accordion multi="false">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header class="lab_panel_header">
-          <h2 id="lab_name">{{ crss[crs].regulatory.crs_id + " " + crss[crs].regulatory.associated_regulatory_crs }}</h2>
+      <mat-expansion-panel class="crss_regs">
+        <mat-expansion-panel-header *ngIf="crss[crs].regulatory.crs_id != '' && crss[crs].regulatory.crs_name != ''" class="lab_panel_header">
+          <h2 id="lab_name">{{ crss[crs].regulatory.crs_id + " - " + crss[crs].regulatory.associated_regulatory_crs }}</h2>
         </mat-expansion-panel-header >
         <div id="lab_info">
           <div fxLayout="row" fxLayoutAlign="center">

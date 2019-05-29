@@ -56,3 +56,11 @@ mat-action-row button {
   -webkit-box-shadow: 5px 3px 10px 4px #ccc;
   box-shadow:         5px 3px 10px 4px #ccc;
 }
+
+.add_new_reg {
+  background: rgb(253, 242, 242);
+}
+
+.crss_regs {
+  background: rgb(237, 250, 238);
+}

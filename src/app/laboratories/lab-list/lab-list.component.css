@@ -15,7 +15,7 @@
   background: rgb(253, 242, 242);
 }
 
-.crss_labs {
+.crss_labs mat-expansion-panel {
   background: rgb(237, 250, 238);
 }
 
@@ -48,4 +48,21 @@ mat-action-row button {
 .mat-expansion-panel {
   width: 93%;
   margin: 8px auto;
+}
+
+.lab_is_open {
+  opacity: .9;
+  position: absolute;
+  top: 64px;
+  z-index: 90;
+  height: 100%;
+  width: 90%;
+  overflow: auto;
+  background: rgba(0, 0, 0, .9);
+}
+
+.lab_is_open mat-expansion-panel {
+  position: absolute;
+  width: 100%;
+  margin-bottom: 64px !important;
 }

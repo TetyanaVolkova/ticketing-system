@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 export class AppService {
   private crss;
   public tickets;
-  private crssUpdated = new Subject();
+  public crssUpdated = new Subject();
   private ticketsUpdated = new Subject();
 
   constructor(private http: HttpClient) {}
