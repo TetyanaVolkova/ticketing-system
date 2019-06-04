@@ -21,56 +21,57 @@
             <h3 id="lab_name"><span> &nbsp;&nbsp; </span> {{ lab.lab_name }}</h3>
           </mat-expansion-panel-header>
           <div class="lab_info">
-            <app-lab-info [lab]="lab" [lable]="'Location'" [labAtrr]="'location'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Location'" [labAtrr]="'location'"></app-info>
             <app-ticket-element
               [ticketatr]="'location'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'POC Name'" [labAtrr]="'PoC_name'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'POC Name'" [labAtrr]="'PoC_name'"></app-info>
             <app-ticket-element
               [ticketatr]="'PoC_name'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info
+            <app-info
+              [labReg]="'laboratory'"
               [lab]="lab"
               [lable]="'POC Address'"
               [labAtrr]="'PoC_address'">
-            </app-lab-info>
+            </app-info>
             <app-ticket-element
               [ticketatr]="'PoC_address'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'Certification'" [labAtrr]="'certification'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Certification'" [labAtrr]="'certification'"></app-info>
             <app-ticket-element
               [ticketatr]="'certification'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'LDMS#'" [labAtrr]="'LDMS'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'LDMS#'" [labAtrr]="'LDMS'"></app-info>
             <app-ticket-element
               [ticketatr]="'LDMS'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'Quality Assurance'" [labAtrr]="'qa_services'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Quality Assurance'" [labAtrr]="'qa_services'"></app-info>
             <app-ticket-element
               [ticketatr]="'qa_services'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'Tests Performed'" [labAtrr]="'lab_test_performed'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Tests Performed'" [labAtrr]="'lab_test_performed'"></app-info>
             <app-ticket-element
               [ticketatr]="'lab_test_performed'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'Certified By'" [labAtrr]="'Certified_By'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Certified By'" [labAtrr]="'Certified_By'"></app-info>
             <app-ticket-element
               [ticketatr]="'Certified_By'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'Latitude'" [labAtrr]="'Latitude'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Latitude'" [labAtrr]="'Latitude'"></app-info>
             <app-ticket-element
               [ticketatr]="'Latitude'"
               [labId]="lab.lab_id">
             </app-ticket-element>
-            <app-lab-info [lab]="lab" [lable]="'Longtitude'" [labAtrr]="'Longtitude'"></app-lab-info>
+            <app-info [labReg]="'laboratory'" [lab]="lab" [lable]="'Longtitude'" [labAtrr]="'Longtitude'"></app-info>
             <app-ticket-element
               [ticketatr]="'Longtitude'"
               [labId]="lab.lab_id">
@@ -78,11 +79,10 @@
           </div>
           <app-ticket-element
             [labId]="lab.lab_id"
-            [ticketatr]=""
             [status]="'delete'">
           </app-ticket-element>
           <mat-action-row>
-            <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
+            <button (click)="deleteLab(lab.lab_id, 'laboratory')" mat-raised-button color="warn">DELETE</button>
           </mat-action-row>
         </mat-expansion-panel>
       </div>

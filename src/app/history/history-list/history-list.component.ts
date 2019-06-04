@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../app.service';
 import { SearchService } from '../../search-component/search.service';
+import { HistoryService } from '../history.service';
 // const moment = require('moment');
 
 @Component({
@@ -17,7 +18,8 @@ export class HistoryListComponent implements OnInit, OnDestroy {
 
   constructor ( public appService: AppService,
                 private cd: ChangeDetectorRef,
-                private searchService: SearchService ) {}
+                private searchService: SearchService,
+                private historyService: HistoryService ) {}
 
   ngOnInit() {
     this.searchSub = this.searchService.getSearchUpdateListener()
@@ -41,10 +43,11 @@ export class HistoryListComponent implements OnInit, OnDestroy {
     this.searchSub.unsubscribe();
   }
 
-  // deleteLab(id: number) {
-  //   this.laboratoryService.deleteLab(id);
-  // }
-  // editLab( id: number, ticket_atr: string, ticket_old_value: string ) {
-  //   this.laboratoryService.addPost( id, ticket_atr, ticket_old_value );
-  // }
+  deleteLab(id: number) {
+    console.log(id);
+    this.historyService.deleteLab(id);
+  }
+  approveReject(id: number, oldStatus: string, status: string) {
+    this.appService.approveReject(id, oldStatus, status);
+  }
 }

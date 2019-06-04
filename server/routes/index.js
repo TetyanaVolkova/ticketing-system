@@ -90,18 +90,42 @@ router.post("/api/tickets_list", (req, res, next) => {
   });
 });
 
-router.delete("/api/lab_list:id", (req, res, next) => {
-  // console.log('---------------------------');
-  // console.log('---------------------------');
-  // console.log('---------------------------');
-  // console.log('---------------------------');
-  // console.log('---------------------------');
-  // console.log('---------------------------');
-  // console.log('---------------------------');
-  // console.log(req.params.id);
-  readModels.Laboratories.findOne( {where: {'lab_id': req.params.id}} )
-  .then(lab => {
-    lab.destroy();
+router.put("/api/tickets_list/:id", (req, res, next) => {
+  const ticket = req.body;
+  console.log(req.body);
+  Models.Tickets.findById( req.params.id )
+  .then(result => {
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    // console.log('---------------------------');
+    result.ticket_status = req.body.ticket_status;
+    return result.save()
+    .then(result => {
+      res.json( result.dataValues );
+    })
+  })
+  .catch(err => {
+    console.log(err);
+  });
+});
+
+router.delete("/api/tickets_list/:id", (req, res, next) => {
+  console.log('---------------------------');
+  console.log('---------------------------');
+  console.log('---------------------------');
+  console.log('---------------------------');
+  console.log('---------------------------');
+  console.log('---------------------------');
+  console.log('---------------------------');
+  let num = Number(req.params.id);
+  console.log(num);
+  Models.Tickets.destroy( {where: {'ticket_id': num}} )
+  .then(ticket => {
+    // ticket.destroy();
   })
   .catch(err => console.log(err));
 

@@ -5,6 +5,8 @@ const Tickets = db.sequelize.define(
   'tickets',
   {
     ticket_id:{ type: Sequelize.INTEGER, primaryKey: true },
+    lab_reg: Sequelize.STRING,
+    reg_id: Sequelize.INTEGER,
     lab_id: Sequelize.INTEGER,
     ticket_date: Sequelize.DATE,
     ticket_status: Sequelize.STRING,

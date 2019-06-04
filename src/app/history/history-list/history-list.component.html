@@ -4,18 +4,21 @@
   <mat-accordion *ngIf="history" multi="false">
     <mat-expansion-panel *ngFor="let ticket of history | searchPipe:searchString:'ticket_status'">
       <mat-expansion-panel-header class="lab_panel_header">
-        <h2 id="lab_name">{{ (ticket.ticket_id + 1) }}<i>. Ticket was created </i>on {{ ticket.ticket_date }}, <i>status: </i> {{ ticket.ticket_status }}</h2>
+        <h3>
+          {{ (ticket.ticket_id + 1) }}. Ticket for {{ticket.lab_reg || 'laboratory'}} <i>was created by</i> {{ ticket.ticket_fullname }} on {{ticket.ticket_date}}. 
+        </h3>
+        <span><h2 class="status_span">status: {{ ticket.ticket_status.toUpperCase() }}</h2></span>
       </mat-expansion-panel-header >
       <div id="lab_info">
-        <div fxLayout="row" fxLayoutAlign="center">
+          <h3>{{ ticket.ticket_atr }} was changed.</h3>
+          <h4>Old value was:</h4>
+          <p>{{ticket.ticket_old_value}}</p>
+          <h4>New value is:</h4>
+          <p>{{ ticket.ticket_new_value }}</p>
+        <!-- <div fxLayout="row" fxLayoutAlign="center">
           <h3 fxFlex="18%">Email:</h3>
           <h4 fxFlex="60%">{{ ticket.ticket_email }}</h4>
           <button fxFlex="10%" (click)="editLab(lab.lab_id, 'location', lab.location)" mat-raised-button color="primary">EDIT</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <h3 fxFlex="18%">Full Name:</h3>
-          <h4 fxFlex="60%">{{ ticket.ticket_fullname }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_name', ab.PoC_name)" mat-raised-button color="primary">EDIT</button>
         </div>
         <div fxLayout="row" fxLayoutAlign="center">
           <h3 fxFlex="18%">atr changed:</h3>
@@ -29,9 +32,9 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center">
           <h3 fxFlex="18%">ticket new value:</h3>
-          <h4 fxFlex="60%">{{ ticket.ticket_new_value }}</h4>
-          <button fxFlex="10%" (click)="editLab(lab.lab_id, 'LDMS', lab.LDMS)" mat-raised-button color="primary">EDIT</button>
-        </div>
+          <h4 fxFlex="60%">{{ ticket.ticket_new_value }}</h4> -->
+          <!-- <button fxFlex="10%" (click)="editLab(lab.lab_id, 'LDMS', lab.LDMS)" mat-raised-button color="primary">EDIT</button>
+        </div> -->
         <!-- <div fxLayout="row" fxLayoutAlign="center">
           <h3 fxFlex="18%">language:</h3>
           <h4 fxFlex="60%">{{ reg.language }}</h4>
@@ -59,7 +62,9 @@
         </div> -->
       </div>
       <mat-action-row>
-        <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
+        <button [disabled]="ticket.ticket_status == 'approved' || ticket.ticket_status == 'rejected' " (click)="approveReject(ticket.ticket_id, ticket.ticket_status, 'approved')" mat-raised-button color="primary">APPROVE</button>
+        <span class="buttons_span"></span>
+        <button [disabled]= "ticket.ticket_status == 'approved' || ticket.ticket_status == 'rejected' " (click)="approveReject(ticket.ticket_id, ticket.ticket_status, 'rejected')" mat-raised-button color="warn">REJECT</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

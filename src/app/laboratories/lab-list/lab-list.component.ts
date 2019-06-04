@@ -56,7 +56,7 @@ export class LabListComponent implements OnInit, OnDestroy {
     this.historyService.onOpen( lab.lab_id );
   }
 
-  deleteLab(id: number) {
-    this.laboratoryService.deleteLab(id);
+  deleteLab(id: number, lab_reg: string) {
+    this.appService.deleteLab(id, lab_reg);
   }
 }

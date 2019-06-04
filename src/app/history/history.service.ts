@@ -72,23 +72,24 @@ export class HistoryService {
   //     });
   // }
 
-  // deleteLab(id) {
-  //   const ticket_id = this.tickets.length + 1;
-  //   const ticket = { ticket_id: ticket_id,
-  //                   ticket_date: this.date,
-  //                   ticket_status: 'delete',
-  //                   ticket_email: 'email@email.com',
-  //                   ticket_fullname: 'Some Name',
-  //                   lab_id: id,
-  //                   ticket_atr: '',
-  //                   ticket_old_value: '',
-  //                   ticket_new_value: ''
-  //                 };
-    // this.http
-    //   .post('http://localhost:3000/api/tickets_list', ticket)
-    //   .subscribe(responseData => {
-    //     this.tickets.push(responseData);
-    //     this.ticketsUpdated.next([...this.tickets]);
-    //   });
-  // }
+  deleteLab(id) {
+    // const ticket_id = this.tickets.length + 1;
+    // const ticket = { ticket_id: ticket_id,
+    //                 ticket_date: this.date,
+    //                 ticket_status: 'delete',
+    //                 ticket_email: 'email@email.com',
+    //                 ticket_fullname: 'Some Name',
+    //                 lab_id: id,
+    //                 ticket_atr: '',
+    //                 ticket_old_value: '',
+    //                 ticket_new_value: ''
+    //               };
+    this.http
+      .delete('http://localhost:3000/api/tickets_list/' + id)
+      .subscribe(responseData => {
+        console.log(responseData);
+        // this.tickets.push(responseData);
+        // this.ticketsUpdated.next([...this.tickets]);
+      });
+  }
 }

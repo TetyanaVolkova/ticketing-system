@@ -16,47 +16,58 @@
     <mat-accordion multi="false">
       <mat-expansion-panel class="crss_regs">
         <mat-expansion-panel-header *ngIf="crss[crs].regulatory.crs_id != '' && crss[crs].regulatory.crs_name != ''" class="lab_panel_header">
-          <h2 id="lab_name">{{ crss[crs].regulatory.crs_id + " - " + crss[crs].regulatory.associated_regulatory_crs }}</h2>
+          <h2 id="lab_name">{{crss[crs].regulatory.id}}.{{ crss[crs].regulatory.crs_id + " - " + crss[crs].regulatory.associated_regulatory_crs }}</h2>
         </mat-expansion-panel-header >
         <div id="lab_info">
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">CTU name:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.ctu_name }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'location', lab.location)" mat-raised-button color="primary">EDIT</button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">local irb ec name:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.local_irb_ec_name }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_name', ab.PoC_name)" mat-raised-button color="primary">EDIT</button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">other irb ec name:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.other_irb_ec_name }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'PoC_address', lab.PoC_address)" mat-raised-button color="primary">EDIT</button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">established ibc:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.established_ibc }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'certification', lab.certification)" mat-raised-button color="primary">EDIT</button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">ibc_name:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.ibc_name }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'LDMS', lab.LDMS)" mat-raised-button color="primary">EDIT</button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">language:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.language }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'qa_services', lab.qa_services)" mat-raised-button color="primary">EDIT</button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center">
-            <h3 fxFlex="18%">cti_needed:</h3>
-            <h4 fxFlex="60%">{{ crss[crs].regulatory.cti_needed }}</h4>
-            <button fxFlex="10%" (click)="editLab(lab.lab_id, 'lab_test_performed', lab.lab_test_performed)" mat-raised-button color="primary">EDIT</button>
-          </div>
+          <app-info
+            [labReg]="'regulatory'"
+            [lab]="crss[crs].regulatory"
+            [lable]="'CTU name'"
+            [labAtrr]="'ctu_name'">
+          </app-info>
+          <app-ticket-element
+            [ticketatr]="'ctu_name'"
+            [labId]="crss[crs].regulatory.id">
+          </app-ticket-element>
+          <app-info
+            [labReg]="'regulatory'"
+            [lab]="crss[crs].regulatory"
+            [lable]="'Local irb ec name'"
+            [labAtrr]="'local_irb_ec_name'">
+          </app-info>
+          <app-info
+            [labReg]="'regulatory'"  
+            [lab]="crss[crs].regulatory"
+            [lable]="'Other irb ec name'"
+            [labAtrr]="'other_irb_ec_name'">
+          </app-info>
+          <app-info
+            [labReg]="'regulatory'"
+            [lab]="crss[crs].regulatory"
+            [lable]="'Established ibc'"
+            [labAtrr]="'established_ibc'">
+          </app-info>
+          <app-info
+            [labReg]="'regulatory'"
+            [lab]="crss[crs].regulatory"
+            [lable]="'Ibc name'"
+            [labAtrr]="'ibc_name'">
+          </app-info>
+          <app-info
+            [labReg]="'regulatory'"
+            [lab]="crss[crs].regulatory"
+            [lable]="'Language'"
+            [labAtrr]="'language'">
+          </app-info>
+          <app-info
+            [labReg]="'regulatory'"
+            [lab]="crss[crs].regulatory"
+            [lable]="'Cti needed'"
+            [labAtrr]="'cti_needed'">
+          </app-info>
         </div>
         <mat-action-row>
-          <button (click)="deleteLab(lab.lab_id)" mat-raised-button color="warn">DELETE</button>
+          <button (click)="deleteLab( crss[crs].regulatory.reg_id, 'regulatory' )" mat-raised-button color="warn">DELETE</button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>

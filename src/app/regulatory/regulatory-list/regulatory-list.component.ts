@@ -59,6 +59,10 @@ export class RegulatoryListComponent implements OnInit, OnDestroy {
     this.searchSub.unsubscribe();
   }
 
+  deleteLab ( id: number, lab_reg: string ) {
+    this.appService.deleteLab(id, lab_reg);
+  }
+
   // deleteLab(id: number) {
   //   this.laboratoryService.deleteLab(id);
   // }
