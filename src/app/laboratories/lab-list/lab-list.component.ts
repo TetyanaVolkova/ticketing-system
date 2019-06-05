@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Laboratory } from '../laboratory.model';
@@ -6,6 +6,7 @@ import { LaboratoryService } from '../laboratory.service';
 import { SearchService } from '../../search-component/search.service';
 import { AppService } from '../../app.service';
 import { HistoryService } from '../../history/history.service';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lab-list',
@@ -19,12 +20,14 @@ export class LabListComponent implements OnInit, OnDestroy {
   private searchSub;
   private searchString = '';
   private toggleTarget = true;
+  private panelOpenState;
 
   constructor(public laboratoryService: LaboratoryService,
               private appService: AppService,
               private historyService: HistoryService,
               private cd: ChangeDetectorRef,
-              private searchService: SearchService) {}
+              private searchService: SearchService,
+              @Inject(DOCUMENT) private document: any) {}
 
   ngOnInit() {
     this.searchSub = this.searchService.getSearchUpdateListener()
@@ -45,7 +48,7 @@ export class LabListComponent implements OnInit, OnDestroy {
     this.searchSub.unsubscribe();
   }
 
-  onOpen ( event, lab ) {
+  onOpen ( event, lab, open ) {
     if ( this.toggleTarget === true ) {
       event.currentTarget.parentElement.parentElement.classList.add('lab_is_open');
     } else {
@@ -56,7 +59,8 @@ export class LabListComponent implements OnInit, OnDestroy {
     this.historyService.onOpen( lab.lab_id );
   }
 
-  deleteLab(id: number, lab_reg: string) {
+  deleteLab(event, id: number, lab_reg: string) {
+    this.document.getElementsByClassName('lab_is_open')[0].classList.remove('lab_is_open');
     this.appService.deleteLab(id, lab_reg);
   }
 }

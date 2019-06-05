@@ -25,10 +25,10 @@ export class HistoryService {
       });
 
   }
-  onOpen( lab_id ) {
+  onOpen( id ) {
     const that = this;
     this.history.forEach(element => {
-      if ( element.lab_id === lab_id ) {
+      if ( element.lab_id === id || element.reg_id === id ) {
         element.ticket_date =  moment( element.ticket_date ).format( 'MMMM DD, YYYY' );
         that.ticketArray.push(element);
       }

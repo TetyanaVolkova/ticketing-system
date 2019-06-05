@@ -65,3 +65,7 @@ mat-action-row button {
   position: absolute;
   width: 100%;
 }
+
+.hide_panel {
+  display: none;
+}

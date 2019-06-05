@@ -10,6 +10,7 @@ export class AppService {
   public tickets;
   public crssUpdated = new Subject();
   private ticketsUpdated = new Subject();
+  private disabledButton = new Subject();
   private date = new Date();
   private ticketSub;
   private reg_id;
@@ -70,6 +71,7 @@ export class AppService {
   }
 
   deleteLab(id, lab_reg) {
+    this.disabledButton.next(true);
     setTimeout(() => {
       if ( lab_reg === 'laboratory') {
         this.reg_id = null;
@@ -134,5 +136,9 @@ export class AppService {
 
   getTicketsUpdateListener() {
     return this.ticketsUpdated.asObservable();
+  }
+
+  disabledButtonUpdateListener() {
+    return this.disabledButton.asObservable();
   }
 }

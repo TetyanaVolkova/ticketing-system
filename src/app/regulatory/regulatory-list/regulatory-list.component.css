@@ -64,3 +64,19 @@ mat-action-row button {
 .crss_regs {
   background: rgb(237, 250, 238);
 }
+
+.lab_is_open {
+  opacity: .9;
+  position: absolute;
+  top: 64px;
+  z-index: 90;
+  height: calc(100vh - 64px);
+  width: 92%;
+  overflow: auto;
+  margin-left: -20px;
+}
+
+.lab_is_open mat-expansion-panel {
+  position: absolute;
+  width: 100%;
+}

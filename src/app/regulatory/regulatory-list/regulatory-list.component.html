@@ -14,62 +14,92 @@
     </mat-accordion>
     
     <mat-accordion multi="false">
-      <mat-expansion-panel class="crss_regs">
-        <mat-expansion-panel-header *ngIf="crss[crs].regulatory.crs_id != '' && crss[crs].regulatory.crs_name != ''" class="lab_panel_header">
-          <h2 id="lab_name">{{crss[crs].regulatory.id}}.{{ crss[crs].regulatory.crs_id + " - " + crss[crs].regulatory.associated_regulatory_crs }}</h2>
-        </mat-expansion-panel-header >
-        <div id="lab_info">
-          <app-info
-            [labReg]="'regulatory'"
-            [lab]="crss[crs].regulatory"
-            [lable]="'CTU name'"
-            [labAtrr]="'ctu_name'">
-          </app-info>
+      <div class="crss_labs">
+        <mat-expansion-panel [(ngModel)]="crss[crs].regulatory.panelOpenState" [expanded]="crss[crs].regulatory.panelOpenState" class="crss_regs" ngDefaultControl>
+          <mat-expansion-panel-header (click)="onOpen( $event, crss[crs].regulatory )" *ngIf="crss[crs].regulatory.crs_id != '' && crss[crs].regulatory.crs_name != ''" class="lab_panel_header">
+            <h2 id="lab_name">{{ crss[crs].regulatory.crs_id + " - " + crss[crs].regulatory.associated_regulatory_crs }}</h2>
+          </mat-expansion-panel-header >
+          <div id="lab_info">
+            <app-info
+              [labReg]="'regulatory'"
+              [lab]="crss[crs].regulatory"
+              [lable]="'CTU name'"
+              [labAtrr]="'ctu_name'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'ctu_name'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+            <app-info
+              [labReg]="'regulatory'"
+              [lab]="crss[crs].regulatory"
+              [lable]="'Local irb ec name'"
+              [labAtrr]="'local_irb_ec_name'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'local_irb_ec_name'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+            <app-info
+              [labReg]="'regulatory'"  
+              [lab]="crss[crs].regulatory"
+              [lable]="'Other irb ec name'"
+              [labAtrr]="'other_irb_ec_name'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'other_irb_ec_name'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+            <app-info
+              [labReg]="'regulatory'"
+              [lab]="crss[crs].regulatory"
+              [lable]="'Established ibc'"
+              [labAtrr]="'established_ibc'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'established_ibc'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+            <app-info
+              [labReg]="'regulatory'"
+              [lab]="crss[crs].regulatory"
+              [lable]="'Ibc name'"
+              [labAtrr]="'ibc_name'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'ibc_name'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+            <app-info
+              [labReg]="'regulatory'"
+              [lab]="crss[crs].regulatory"
+              [lable]="'Language'"
+              [labAtrr]="'language'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'language'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+            <app-info
+              [labReg]="'regulatory'"
+              [lab]="crss[crs].regulatory"
+              [lable]="'Cti needed'"
+              [labAtrr]="'cti_needed'">
+            </app-info>
+            <app-ticket-element
+              [ticketatr]="'cti_needed'"
+              [labId]="crss[crs].regulatory.id">
+            </app-ticket-element>
+          </div>
           <app-ticket-element
-            [ticketatr]="'ctu_name'"
-            [labId]="crss[crs].regulatory.id">
+            [labId]="crss[crs].regulatory.id"
+            [status]="'deleted'">
           </app-ticket-element>
-          <app-info
-            [labReg]="'regulatory'"
-            [lab]="crss[crs].regulatory"
-            [lable]="'Local irb ec name'"
-            [labAtrr]="'local_irb_ec_name'">
-          </app-info>
-          <app-info
-            [labReg]="'regulatory'"  
-            [lab]="crss[crs].regulatory"
-            [lable]="'Other irb ec name'"
-            [labAtrr]="'other_irb_ec_name'">
-          </app-info>
-          <app-info
-            [labReg]="'regulatory'"
-            [lab]="crss[crs].regulatory"
-            [lable]="'Established ibc'"
-            [labAtrr]="'established_ibc'">
-          </app-info>
-          <app-info
-            [labReg]="'regulatory'"
-            [lab]="crss[crs].regulatory"
-            [lable]="'Ibc name'"
-            [labAtrr]="'ibc_name'">
-          </app-info>
-          <app-info
-            [labReg]="'regulatory'"
-            [lab]="crss[crs].regulatory"
-            [lable]="'Language'"
-            [labAtrr]="'language'">
-          </app-info>
-          <app-info
-            [labReg]="'regulatory'"
-            [lab]="crss[crs].regulatory"
-            [lable]="'Cti needed'"
-            [labAtrr]="'cti_needed'">
-          </app-info>
-        </div>
-        <mat-action-row>
-          <button (click)="deleteLab( crss[crs].regulatory.reg_id, 'regulatory' )" mat-raised-button color="warn">DELETE</button>
-        </mat-action-row>
-      </mat-expansion-panel>
+          <mat-action-row>
+            <button [disabled]="disabledButton" (click)="deleteLab( crss[crs].regulatory.id, 'regulatory' ); crss[crs].regulatory.panelOpenState = false; toggleTarget = !toggleTarget" mat-raised-button color="warn">DELETE</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </div>
     </mat-accordion>
   </div>
 </div>

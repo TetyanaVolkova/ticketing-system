@@ -5,9 +5,9 @@
     <mat-expansion-panel *ngFor="let ticket of history | searchPipe:searchString:'ticket_status'">
       <mat-expansion-panel-header class="lab_panel_header">
         <h3>
-          {{ (ticket.ticket_id + 1) }}. Ticket for {{ticket.lab_reg || 'laboratory'}} <i>was created by</i> {{ ticket.ticket_fullname }} on {{ticket.ticket_date}}. 
+          {{ (ticket.ticket_id + 1) }}. Ticket for <strong>{{ticket.lab_reg}} </strong> <i> was created by, </i> {{ ticket.ticket_fullname }}, on {{ticket.ticket_date}}. 
         </h3>
-        <span><h2 class="status_span">status: {{ ticket.ticket_status.toUpperCase() }}</h2></span>
+        <span><h2 class="status_span">Status: {{ ticket.ticket_status.toUpperCase() }}</h2></span>
       </mat-expansion-panel-header >
       <div id="lab_info">
           <h3>{{ ticket.ticket_atr }} was changed.</h3>

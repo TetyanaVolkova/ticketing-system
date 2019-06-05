@@ -15,8 +15,8 @@
 
     <mat-accordion multi="false">
       <div class="crss_labs">
-        <mat-expansion-panel *ngFor="let lab of crss[crs].laboratories; let i = index">
-          <mat-expansion-panel-header (click)="onOpen( $event, lab )" class="lab_panel_header">
+        <mat-expansion-panel [ngClass]="{'hide_panel': !lab.expanded && !toggleTarget}" [(ngModel)]="lab.expanded" [expanded]="lab.expanded" *ngFor="let lab of crss[crs].laboratories; let i = index" ngDefaultControl>
+          <mat-expansion-panel-header (click)="onOpen( $event, lab, lab.expanded ); lab.expanded = !lab.expanded" class="lab_panel_header">
             <h5 class="lab_number">Laboratory {{ i + 1 }}: </h5>
             <h3 id="lab_name"><span> &nbsp;&nbsp; </span> {{ lab.lab_name }}</h3>
           </mat-expansion-panel-header>
@@ -79,10 +79,10 @@
           </div>
           <app-ticket-element
             [labId]="lab.lab_id"
-            [status]="'delete'">
+            [status]="'deleted'">
           </app-ticket-element>
           <mat-action-row>
-            <button (click)="deleteLab(lab.lab_id, 'laboratory')" mat-raised-button color="warn">DELETE</button>
+            <button (click)="deleteLab($event, lab.lab_id, 'laboratory'); lab.expanded = !lab.expanded; toggleTarget = !toggleTarget" mat-raised-button color="warn">DELETE</button>
           </mat-action-row>
         </mat-expansion-panel>
       </div>

@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RegulatoryService } from '../regulatory.service';
 import { AppService } from '../../app.service';
 import { SearchService } from '../../search-component/search.service';
+import { HistoryService } from '../../history/history.service';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-regulatory-list',
@@ -15,13 +17,24 @@ export class RegulatoryListComponent implements OnInit, OnDestroy {
   private crssSub: Subscription;
   private searchSub: Subscription;
   private searchString = '';
+  private toggleTarget = true;
+  private panelOpenState;
+  private ticketsUpdatedSub;
+  private disabledButton;
 
   constructor ( private regulatoryService: RegulatoryService,
                 private appService: AppService,
                 private cd: ChangeDetectorRef,
-                private searchService: SearchService ) {}
+                private searchService: SearchService,
+                private historyService: HistoryService,
+                @Inject(DOCUMENT) private document: any ) {}
 
   ngOnInit() {
+    this.ticketsUpdatedSub = this.appService.disabledButtonUpdateListener()
+      .subscribe( (disabledButton) => {
+        this.disabledButton = disabledButton;
+        console.log(this.disabledButton);
+      });
     this.searchSub = this.searchService.getSearchUpdateListener()
       .subscribe((searchString) => {
         this.searchString = searchString.toString();
@@ -60,7 +73,19 @@ export class RegulatoryListComponent implements OnInit, OnDestroy {
   }
 
   deleteLab ( id: number, lab_reg: string ) {
+    this.document.getElementsByClassName('lab_is_open')[0].classList.remove('lab_is_open');
     this.appService.deleteLab(id, lab_reg);
+  }
+
+  onOpen ( event, lab ) {
+    if ( this.toggleTarget === true ) {
+      event.currentTarget.parentElement.parentElement.classList.add('lab_is_open');
+    } else {
+      event.currentTarget.parentElement.parentElement.classList.remove('lab_is_open');
+    }
+    this.toggleTarget = !this.toggleTarget;
+    this.historyService.ticketArray = [];
+    this.historyService.onOpen( lab.id );
   }
 
   // deleteLab(id: number) {

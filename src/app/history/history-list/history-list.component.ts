@@ -3,7 +3,8 @@ import { Subscription } from 'rxjs';
 import { AppService } from '../../app.service';
 import { SearchService } from '../../search-component/search.service';
 import { HistoryService } from '../history.service';
-// const moment = require('moment');
+declare var require: any;
+const moment = require('moment');
 
 @Component({
   selector: 'app-history-list',
@@ -32,7 +33,7 @@ export class HistoryListComponent implements OnInit, OnDestroy {
       .subscribe((history) => {
         this.history = history;
         this.history.forEach(element => {
-          // element.ticket_date = moment( element.ticket_date ).format( 'MMMM DD, YYYY' );
+          element.ticket_date = moment( element.ticket_date ).format( 'MMMM DD, YYYY' );
         });
         this.cd.markForCheck();
       });
